@@ -1,6 +1,6 @@
-from .models import Post, Article, Athlet
+from recovery.models import Post, Article, Athlet
 from .serializers import PostSerializer, ArticleSerializer, AthletSerializer, UserSerializer
-from .permissions import IsCreatedByReadOnly
+from recovery.permissions import IsCreatedByReadOnly
 from django.utils import timezone
 from rest_framework import mixins
 from rest_framework import generics

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Article, Athlet
+from recovery.models import Post, Article, Athlet
 from django.contrib.auth.models import User
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):

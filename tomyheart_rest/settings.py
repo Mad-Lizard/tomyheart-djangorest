@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework',
     'crispy_forms',
+    'api_recovery',
     'recovery',
     'users',
 ]
