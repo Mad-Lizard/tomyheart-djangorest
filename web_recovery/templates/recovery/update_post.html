@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+        {% if message.tags == 'error' %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<h2>
+    Редактирование записи
+</h2>
+
+<form method="POST" enctype="multipart/form-data" class="post-form">{% csrf_token %}
+    <div class="form-group">
+        {{ form|crispy }}
+
+        <button id="save" type="submit" class="btn btn-secondary" value="save">
+            Сохранить
+        </button>
+
+
+        <button type="submit" formaction="{% url 'delete_post' pk=post.pk %}" class="confirm-delete btn btn-danger" >
+            Удалить
+        </button>
+
+
+    </div>
+</form>
+
+{% endblock %}
+<script>
+$(document).on('click', '.confirm-delete', function(){
+    return confirm('Вы уверны, что хотите удалить эту запись?');
+})
+</script>

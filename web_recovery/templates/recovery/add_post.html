@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+        {% if message.tags == 'error' %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<h2>
+    Добавление записи
+</h2>
+<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
+    <div class="form-group">
+        {{ form|crispy }}
+
+        <button id="save" type="submit" class="btn btn-secondary">
+            Сохранить
+        </button>
+
+    </div>
+</form>
+
+{% endblock %}

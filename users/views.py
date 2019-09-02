@@ -1,19 +1,22 @@
-from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from .serializers import UserSerializer, GroupSerializer
+from .forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
+from django.views import generic
+from recovery.models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+class SignUp(generic.View):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/signup.html'
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+class Profile(LoginRequiredMixin, generic.DetailView):
+    model = User
+    template_name = 'registration/profile.html'
 
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = context['user']
+        user_posts = Post.objects.filter(created_by=user).order_by('-created_at')
+        context = {'user':user, 'user_posts':user_posts}
+        return context

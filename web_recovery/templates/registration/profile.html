@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+
+<h2>Профиль</h2>
+<div class="row mb-3">
+<table class="table table-striped">
+    <tbody>
+        <thead>
+            <tr>
+                <th colspan="2" class="table-secondary text-center">
+                {{user.username}}
+                </th>
+            </tr>
+        </thead>
+        <tr>
+            <th scope="row">Имя:</th>
+            <td>{{user.first_name}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Фамилия:</th>
+            <td>{{user.last_name}}</td>
+        </tr>
+        <tr>
+            <th scope="row">E-mail:</th>
+            <td>{{user.email}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<form method="GET">
+    {% csrf_token %}
+    <button type="submit" formaction="{% url 'add_post' %}" class="btn btn-success float-right">
+        Добавить новую запись
+    </button>
+</form>
+<h2>Список записей пользователя:</h2>
+    {% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% for user_post in user_posts %}
+  <div class="row mb-3">
+    <div class="w-25">
+      {% if user_post.image %}
+        <a href="{% url 'update_post' pk=user_post.pk %}">
+          {% thumbnail user_post.image "200x200" crop="center" as im %}
+            <img class="mr-3 list" src="{{im.url}}" width="200" height="200">
+          {% endthumbnail %}
+        </a>
+      {% endif %}
+    </div>
+    <table class="w-75 table-borderless table float-right">
+      <thead>
+        <tr>
+          <th scope="col" class="table-light">
+            <h1>
+            <a class="title" href="{% url 'update_post' pk=user_post.pk %}">
+              {{user_post.title}}
+            </a>
+            </h1>
+          </th>
+        </tr>
+      </thead>
+        <tbody>
+          <tr>
+            <td>
+              {{user_post.description | safe }}
+              <a href="{% url 'update_post' pk=user_post.pk %}">
+                </br>Редактировать ->
+              </a>
+            </td>
+          </tr>
+          <tr>
+              <td>
+                  <form method="POST">
+                      {% csrf_token %}
+                         <button type="submit" formaction="{% url 'delete_post' pk=user_post.pk %}" class="btn btn-danger confirm-delete">
+                            Удалить
+                         </button>
+                  </form>
+              </td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+    {% endfor %}
+
+<script>
+$(document).on('click', '.confirm-delete', function(){
+    return confirm('Вы уверны, что хотите удалить эту запись?');
+})
+</script>
+
+{% endblock %}

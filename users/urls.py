@@ -1,8 +1,7 @@
-from django.contrib import admin
-from django.urls import include, path
-from rest_framework import routers
+from django.urls import path
 from . import views
 
-router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
+urlpatterns = [
+    path('signup/', views.SignUp.as_view(), name='signup'),
+    path('profile/<int:pk>', views.Profile.as_view(), name='profile'),
+]

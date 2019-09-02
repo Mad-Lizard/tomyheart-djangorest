@@ -26,7 +26,7 @@ SECRET_KEY = 'infb9xgf$ah9)t6t7d^f1@t35tb3@7y50mc!dajtaljlnwyczn'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = True
 RAISE_EXCEPTIONS = True
 DEBUG = True
-THUMBNAIL_DEBUG = True
+THUMBNAIL_eb_recoveryDEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'crispy_forms',
     'api_recovery',
+    'web_recovery',
     'recovery',
     'users',
 ]

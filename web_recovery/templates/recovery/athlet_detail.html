@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load embed_video_tags %}
+{% block content %}
+<div class="row">
+    <img class="w-50 img-fluid img-thumbnail" src="{{athlet.image.url}}">
+      <table class="w-50 table float-right">
+        <thead>
+          <tr>
+            <th colspan="2" class="table-active">
+              {{athlet.name}} {{athlet.surname}}
+              ({{athlet.date_of_birth}}-{{athlet.date}})
+            </th>
+          </tr>
+        </thead>
+          <tbody>
+            {% if athlet.e_mail %}
+            <tr>
+              <th scope="row">E-mail:</th>
+              <td><a href="mailto:{{athlet.e_mail}}">{{athlet.e_mail}}</a></td>
+            </tr>
+            {% endif %}
+            {% if athlet.web_site %}
+            <tr>
+              <th scope="row">Web site:</th>
+              <td><a href="{{athlet.web_site}}" target="_blank">
+                {% if athlet.web_site_name %}
+                  {{athlet.web_site_name}}
+                {% else %}
+                  {{athlet.web_site}}
+                {% endif %}
+              </a></td>
+            </tr>
+            {% endif %}
+            {% if athlet.country %}
+            <tr>
+              <th scope="row">Страна:</th>
+              <td>{{athlet.country.name}}</td>
+            </tr>
+            {% endif %}
+            {% if athlet.sport %}
+            <tr>
+              <th scope="row">Вид деятельности:</th>
+              <td>{{athlet.sport}}</td>
+            </tr>
+            {% endif %}
+            <tr>
+              <th scope="row">Диагноз:</th>
+              <td>{{athlet.diagnosis}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Операция:</th>
+              <td>{{athlet.surgery}}, {{athlet.date_of_surgery}}</td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
+  <br>
+  <div class="row">
+    <p>{{athlet.text|safe}}</p>
+  </div>
+  <div class="row justify-content-center mb-4">
+    {% video athlet.video 'medium' %}
+  </div>
+<div class="row">
+
+</div>
+{% endblock %}

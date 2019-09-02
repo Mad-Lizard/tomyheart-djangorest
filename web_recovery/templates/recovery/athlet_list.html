@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block content %}
+  {% for athlet in athlets %}
+    <div class="row mb-3">
+      {% if athlet.image %}
+      <a href="{% url 'athlet_detail' pk=athlet.pk %}">
+        {% thumbnail athlet.image "200x200" crop="center" as im %}
+            <img class="mr-3" src="{{im.url}}" width="{{im.width}}" height="{{im.height}}">
+        {% endthumbnail %}
+      </a>
+      {% endif %}
+        <table class="w-75 table-borderless text-top float-right">
+          <thead>
+            <tr>
+              <th scope="col" class="table-light">
+                <h1>
+                <a class="title" href="{% url 'athlet_detail' pk=athlet.pk %}">
+                  {{athlet.name}} {{athlet.surname}}
+                </a>
+                </h1>
+              </th>
+            </tr>
+          </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {{athlet.description | safe}}
+                  <a href="{% url 'athlet_detail' pk=athlet.pk %}">
+                    <br>
+                    Узнать историю ->
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+  {% endfor %}
+
+{% endblock %}
